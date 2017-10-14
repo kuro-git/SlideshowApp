@@ -45,8 +45,9 @@ class ViewController: UIViewController {
             self.image_sec = -1      // 写真を１枚目に戻す
         }
     }
-
-    @IBAction func playButton(_ sender: Any) {
+    
+    //まず再生ボタンと停止ボタンを切り分けて考える
+    /*@IBAction func playButton(_ sender: Any) {
         if timer == nil {
             // タイマーの作成、始動
             self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
@@ -59,7 +60,37 @@ class ViewController: UIViewController {
             self.timer = nil          // startTimer() の timer == nil で判断するために、 timer = nil としておく
             self.image_sec = -1       // 写真を１枚目に戻す
         }
+    }*/
+    
+    //再生ボタン停止ボタン切り替え
+    @IBOutlet weak var button: UIButton!
+    
+    // true : 再生中,  false : 停止中
+    var isPlaying = false
+    
+    @IBAction func onButton(_ sender: Any) {
+        
+        if isPlaying {
+            button.setTitle("停止", for: UIControlState.normal)
+            isPlaying = false
+            
+            if self.timer != nil {
+                self.timer.invalidate()   // 現在のタイマーを破棄する
+                self.timer = nil          // startTimer() の timer == nil で判断するために、 timer = nil としておく
+                self.image_sec = -1       // 写真を１枚目に戻す
+            }
+
+        } else {
+            button.setTitle("再生", for: UIControlState.normal)
+            isPlaying = true
+            
+            if timer == nil {
+                // タイマーの作成、始動
+                self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+            }
+        }
     }
+    
     
     var FFimage_sec = -1
     @IBAction func FFbtn(_ sender: Any) {
