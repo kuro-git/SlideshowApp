@@ -71,7 +71,7 @@ class ViewController: UIViewController {
     @IBAction func onButton(_ sender: Any) {
         
         if isPlaying {
-            button.setTitle("停止", for: UIControlState.normal)
+            button.setTitle("Play", for: UIControlState.normal)
             isPlaying = false
             
             if self.timer != nil {
@@ -81,7 +81,7 @@ class ViewController: UIViewController {
             }
 
         } else {
-            button.setTitle("再生", for: UIControlState.normal)
+            button.setTitle("Stop", for: UIControlState.normal)
             isPlaying = true
             
             if timer == nil {

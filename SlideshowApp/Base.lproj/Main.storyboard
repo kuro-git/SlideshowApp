@@ -30,7 +30,7 @@
                                 <rect key="frame" x="50" y="399" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="戻る"/>
+                                <state key="normal" title="&lt;&lt;"/>
                                 <connections>
                                     <action selector="Rewbtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Gcl-bn-jds"/>
                                 </connections>
@@ -39,7 +39,7 @@
                                 <rect key="frame" x="264" y="399" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="進む"/>
+                                <state key="normal" title="&gt;&gt;"/>
                                 <connections>
                                     <action selector="FFbtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Cis-Xu-bh2"/>
                                 </connections>
@@ -47,7 +47,7 @@
                             <button opaque="NO" contentMode="scaleAspectFit" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eE3-wz-JMK">
                                 <rect key="frame" x="50" y="57" width="274" height="305"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Touch"/>
                                 <connections>
                                     <segue destination="eQx-ds-mmA" kind="show" id="ekp-mC-sNX"/>
                                 </connections>
@@ -56,7 +56,7 @@
                                 <rect key="frame" x="157" y="399" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="再生">
+                                <state key="normal" title="Play">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
