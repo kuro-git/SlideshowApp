@@ -88,7 +88,7 @@ class ViewController: UIViewController {
         
         var image:UIImage?
         
-        if timer == nil {
+        if isPlaying == false {
             if FFimage_sec < 3 {
                 let name = img[FFimage_sec]
                 image = UIImage(named: name)!
@@ -113,7 +113,7 @@ class ViewController: UIViewController {
         //現在のimage_secよりも一つ進める
         var image:UIImage?
         
-        if timer == nil {
+        if isPlaying == false  {
             if 0 <= FFimage_sec, FFimage_sec < 3 {
                 let name = img[FFimage_sec]
                 image = UIImage(named: name)!
@@ -136,7 +136,7 @@ class ViewController: UIViewController {
         // segueから遷移先のResultViewControllerを取得する
         let resultViewController:ResultViewController = segue.destination as! ResultViewController
         // 遷移先のResultViewControllerで宣言しているx, yに値を代入して渡す（写真の値）
-        if timer != nil {
+        if isPlaying {
             self.image_sec -= 1
             let name = img[image_sec]
             print("image_sec: \(image_sec)")
