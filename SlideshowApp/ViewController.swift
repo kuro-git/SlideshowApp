@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     
     var timer: Timer!
     // 写真の配列のための変数
-    var image_sec = -1
+    var image_sec = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,33 +34,25 @@ class ViewController: UIViewController {
     // timeInterval: 2, repeats: true で指定された通り、2秒毎に呼び出され続ける
     
     func updateTimer(timer: Timer) {
-        self.image_sec += 1
         
         if image_sec < 3 {
             let name = img[image_sec]
             
             let image = UIImage(named: name)!
             slideImg.image = image
+            print("image_sec: \(image_sec)")
+            self.image_sec += 1
         }else {
-            self.image_sec = -1      // 写真を１枚目に戻す
+            self.image_sec = 0      // 写真を１枚目に戻す
+            let name = img[image_sec]
+            
+            
+            let image = UIImage(named: name)!
+            slideImg.image = image
+            print("image_sec: \(image_sec)")
+            self.image_sec += 1
         }
     }
-    
-    //まず再生ボタンと停止ボタンを切り分けて考える
-    /*@IBAction func playButton(_ sender: Any) {
-        if timer == nil {
-            // タイマーの作成、始動
-            self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-        }
-    }
-
-    @IBAction func pauseTimer(_ sender: Any) {
-        if self.timer != nil {
-            self.timer.invalidate()   // 現在のタイマーを破棄する
-            self.timer = nil          // startTimer() の timer == nil で判断するために、 timer = nil としておく
-            self.image_sec = -1       // 写真を１枚目に戻す
-        }
-    }*/
     
     //再生ボタン停止ボタン切り替え
     @IBOutlet weak var button: UIButton!
@@ -77,7 +69,7 @@ class ViewController: UIViewController {
             if self.timer != nil {
                 self.timer.invalidate()   // 現在のタイマーを破棄する
                 self.timer = nil          // startTimer() の timer == nil で判断するために、 timer = nil としておく
-                self.image_sec = -1       // 写真を１枚目に戻す
+                self.image_sec = 0       // 写真を１枚目に戻す
             }
 
         } else {
@@ -92,57 +84,53 @@ class ViewController: UIViewController {
     }
     
     
-    var FFimage_sec = -1
+    var FFimage_sec = 0
     @IBAction func FFbtn(_ sender: Any) {
         //現在のimage_secよりも一つ進める
-        self.FFimage_sec += 1
+        
         var image:UIImage?
         
         if timer == nil {
             if FFimage_sec < 3 {
                 let name = img[FFimage_sec]
                 image = UIImage(named: name)!
+                slideImg.image = image
+                print("FFimage_sec: \(FFimage_sec)")
+                self.FFimage_sec += 1
             }else {
-                FFimage_sec = -1
+                FFimage_sec = 0
+                
+                let name = img[FFimage_sec]
+                image = UIImage(named: name)!
+                slideImg.image = image
+                print("FFimage_sec: \(FFimage_sec)")
+                self.FFimage_sec += 1
             }
-            
-            slideImg.image = image
         }
         
     }
     
-    /*var Rewimage_sec = 3
-    @IBAction func Rewbtn(_ sender: Any) {
-        //現在のimage_secよりも一つ進める
-        self.Rewimage_sec -= 1
-        var image:UIImage?
-        
-        if timer == nil {
-            if 0 <= Rewimage_sec, Rewimage_sec < 3 {
-                let name = img[Rewimage_sec]
-                image = UIImage(named: name)!
-            }else {
-                Rewimage_sec = 3
-            }
-            
-            slideImg.image = image
-        }
-    }*/
     
     @IBAction func Rewbtn(_ sender: Any) {
         //現在のimage_secよりも一つ進める
-        self.FFimage_sec -= 1
         var image:UIImage?
         
         if timer == nil {
             if 0 <= FFimage_sec, FFimage_sec < 3 {
                 let name = img[FFimage_sec]
                 image = UIImage(named: name)!
+                slideImg.image = image
+                print("FFimage_sec: \(FFimage_sec)")
+                self.FFimage_sec -= 1
             }else {
-                FFimage_sec = 3
+                FFimage_sec = 2
+                
+                let name = img[FFimage_sec]
+                image = UIImage(named: name)!
+                slideImg.image = image
+                print("FFimage_sec: \(FFimage_sec)")
+                self.FFimage_sec -= 1
             }
-            
-            slideImg.image = image
         }
     }
     
@@ -151,7 +139,14 @@ class ViewController: UIViewController {
         let resultViewController:ResultViewController = segue.destination as! ResultViewController
         // 遷移先のResultViewControllerで宣言しているx, yに値を代入して渡す（写真の値）
         if timer != nil {
-            if 0 <= image_sec, image_sec < 3 {
+            self.image_sec -= 1
+            let name = img[image_sec]
+            print("image_sec: \(image_sec)")
+            let image = UIImage(named: name)!
+            
+            resultViewController.x = image
+            
+            /*if 0 <= image_sec, image_sec < 3 {
                 let name = img[image_sec]
                 let image = UIImage(named: name)!
                 
@@ -170,9 +165,16 @@ class ViewController: UIViewController {
                 let image = UIImage(named: name)!
                 
                 resultViewController.x = image
-            }
+            }*/
         }else {
+            if 0<FFimage_sec {
+                self.FFimage_sec -= 1
+            }else {
+                self.FFimage_sec = 0
+            }
+            
             let name = img[FFimage_sec]
+            print("FFimage_sec: \(FFimage_sec)")
             let image = UIImage(named: name)!
             
             resultViewController.x = image
