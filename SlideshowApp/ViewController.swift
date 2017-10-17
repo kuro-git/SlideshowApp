@@ -107,7 +107,7 @@ class ViewController: UIViewController {
 /* 戻りボタン */
     @IBAction func Rewbtn(_ sender: Any) {
         //自動再生がoffの時に作動する
-        if isPlaying == false {
+        if isPlaying == false, 0 <= image_sec {
             
             let name = img[image_sec % 3]
             let image = UIImage(named: name)
