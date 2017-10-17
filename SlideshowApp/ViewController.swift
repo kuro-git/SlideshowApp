@@ -58,28 +58,26 @@ class ViewController: UIViewController {
     @IBOutlet weak var button: UIButton!
     
     // true : 再生中,  false : 停止中
+    // !=nil : 再生中, ==nil : 停止中
     var isPlaying = false
     
     @IBAction func onButton(_ sender: Any) {
         
         if isPlaying {
             button.setTitle("Play", for: UIControlState.normal)
-            isPlaying = false
             
-            if self.timer != nil {
-                self.timer.invalidate()   // 現在のタイマーを破棄する
-                self.timer = nil          // startTimer() の timer == nil で判断するために、 timer = nil としておく
-                self.image_sec = 0       // 写真を１枚目に戻す
-            }
+            // 現在のタイマーを破棄する
+            self.timer.invalidate()
+            isPlaying = false          // startTimer() の timer == nil で判断するために、 timer = nil としておく
+            self.image_sec = 0       // 写真を１枚目に戻す ?
 
         } else {
             button.setTitle("Stop", for: UIControlState.normal)
-            isPlaying = true
             
-            if timer == nil {
-                // タイマーの作成、始動
-                self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-            }
+            // タイマーの作成、始動
+            self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+            isPlaying = true
+
         }
     }
     
