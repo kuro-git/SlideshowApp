@@ -65,7 +65,6 @@ class ViewController: UIViewController {
             // 現在のタイマーを破棄する
             self.timer.invalidate()
             isPlaying = false          // startTimer() "停止中"で判断するため、 isPlaying = false としておく
-            //self.image_sec = 0    　// 写真を１枚目に戻す ? <-ループがfunc内で完結しているので、ここで戻す必要なし
 
         } else {
             button.setTitle("Stop", for: UIControlState.normal)
