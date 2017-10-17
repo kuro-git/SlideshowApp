@@ -30,31 +30,27 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+/* 写真ループ */
     // selector: #selector(updatetimer) で指定された関数
     // timeInterval: 2, repeats: true で指定された通り、2秒毎に呼び出され続ける
     
     func updateTimer(timer: Timer) {
         
-        if image_sec < 3 {
-            let name = img[image_sec]
-            
-            let image = UIImage(named: name)!
-            slideImg.image = image
-            print("image_sec: \(image_sec)")
-            self.image_sec += 1
-        }else {
-            self.image_sec = 0      // 写真を１枚目に戻す
-            let name = img[image_sec]
-            
-            
-            let image = UIImage(named: name)!
-            slideImg.image = image
-            print("image_sec: \(image_sec)")
-            self.image_sec += 1
-        }
+        // x % y でループ可能　
+        // X=増え続ける値, y=ループするターム：画像の枚数
+        
+        let name = img[image_sec % 3]
+        print("image_sec: \(image_sec)")
+        
+        let image = UIImage(named: name)!
+        slideImg.image = image
+        
+        // 1枚目の画像を[0]にするため加算演算子はケツに配置する
+        self.image_sec += 1
+        
     }
     
-    //再生ボタン停止ボタン切り替え
+/* 再生ボタン停止ボタン切り替え */
     @IBOutlet weak var button: UIButton!
     
     // true : 再生中,  false : 停止中
@@ -68,8 +64,8 @@ class ViewController: UIViewController {
             
             // 現在のタイマーを破棄する
             self.timer.invalidate()
-            isPlaying = false          // startTimer() の timer == nil で判断するために、 timer = nil としておく
-            self.image_sec = 0       // 写真を１枚目に戻す ?
+            isPlaying = false          // startTimer() "停止中"で判断するため、 isPlaying = false としておく
+            //self.image_sec = 0    　// 写真を１枚目に戻す ? <-ループがfunc内で完結しているので、ここで戻す必要なし
 
         } else {
             button.setTitle("Stop", for: UIControlState.normal)
@@ -81,7 +77,7 @@ class ViewController: UIViewController {
         }
     }
     
-    
+/* 先送りボタン */
     var FFimage_sec = 0
     @IBAction func FFbtn(_ sender: Any) {
         //現在のimage_secよりも一つ進める
@@ -108,7 +104,7 @@ class ViewController: UIViewController {
         
     }
     
-    
+/* 戻りボタン */
     @IBAction func Rewbtn(_ sender: Any) {
         //現在のimage_secよりも一つ進める
         var image:UIImage?
@@ -131,7 +127,8 @@ class ViewController: UIViewController {
             }
         }
     }
-    
+ 
+/* 画面遷移データ渡し */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // segueから遷移先のResultViewControllerを取得する
         let resultViewController:ResultViewController = segue.destination as! ResultViewController
