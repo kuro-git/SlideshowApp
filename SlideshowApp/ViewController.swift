@@ -64,7 +64,9 @@ class ViewController: UIViewController {
             
             // 現在のタイマーを破棄する
             self.timer.invalidate()
-            isPlaying = false          // startTimer() "停止中"で判断するため、 isPlaying = false としておく
+            
+            // startTimer() "停止中"で判断するため、 isPlaying = false としておく
+            isPlaying = false
 
         } else {
             button.setTitle("Stop", for: UIControlState.normal)
@@ -77,28 +79,19 @@ class ViewController: UIViewController {
     }
     
 /* 先送りボタン */
-    var FFimage_sec = 0
+    //var FFimage_sec = 0   //FFを使う必要ないかも
     @IBAction func FFbtn(_ sender: Any) {
-        //現在のimage_secよりも一つ進める
-        
-        var image:UIImage?
-        
+        //自動再生がoffの時に作動する
         if isPlaying == false {
-            if FFimage_sec < 3 {
-                let name = img[FFimage_sec]
-                image = UIImage(named: name)!
-                slideImg.image = image
-                print("FFimage_sec: \(FFimage_sec)")
-                self.FFimage_sec += 1
-            }else {
-                FFimage_sec = 0
-                
-                let name = img[FFimage_sec]
-                image = UIImage(named: name)!
-                slideImg.image = image
-                print("FFimage_sec: \(FFimage_sec)")
-                self.FFimage_sec += 1
-            }
+            
+            let name = img[image_sec % 3]
+            let image = UIImage(named: name)
+            slideImg.image = image
+            print("image_sec: \(image_sec)")
+            
+            //現在のimage_secよりも一つ進める
+            // これも、停止位置から順次作送りするために、加算演算子はケツに配置する
+            self.image_sec += 1
         }
         
     }
@@ -109,20 +102,20 @@ class ViewController: UIViewController {
         var image:UIImage?
         
         if isPlaying == false  {
-            if 0 <= FFimage_sec, FFimage_sec < 3 {
-                let name = img[FFimage_sec]
+            if 0 <= image_sec, image_sec < 3 {
+                let name = img[image_sec]
                 image = UIImage(named: name)!
                 slideImg.image = image
-                print("FFimage_sec: \(FFimage_sec)")
-                self.FFimage_sec -= 1
+                print("image_sec: \(image_sec)")
+                self.image_sec -= 1
             }else {
-                FFimage_sec = 2
+                image_sec = 2
                 
-                let name = img[FFimage_sec]
+                let name = img[image_sec]
                 image = UIImage(named: name)!
                 slideImg.image = image
-                print("FFimage_sec: \(FFimage_sec)")
-                self.FFimage_sec -= 1
+                print("FFimage_sec: \(image_sec)")
+                self.image_sec -= 1
             }
         }
     }
@@ -161,14 +154,14 @@ class ViewController: UIViewController {
                 resultViewController.x = image
             }*/
         }else {
-            if 0<FFimage_sec {
-                self.FFimage_sec -= 1
+            if 0<image_sec {
+                self.image_sec -= 1
             }else {
-                self.FFimage_sec = 0
+                self.image_sec = 0
             }
             
-            let name = img[FFimage_sec]
-            print("FFimage_sec: \(FFimage_sec)")
+            let name = img[image_sec]
+            print("image_sec: \(image_sec)")
             let image = UIImage(named: name)!
             
             resultViewController.x = image
