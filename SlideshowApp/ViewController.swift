@@ -153,6 +153,13 @@ class ViewController: UIViewController {
             
             resultViewController.x = image
 
+        }else if image_sec == 0 { //アプリ起動直後の画面遷移
+            
+            let name = img[image_sec % 3]
+            print("image_sec: \(image_sec)")
+            let image = UIImage(named: name)!
+            
+            resultViewController.x = image
         }else {
             
             self.image_sec -= 1
