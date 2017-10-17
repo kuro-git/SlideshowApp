@@ -79,7 +79,6 @@ class ViewController: UIViewController {
     }
     
 /* 先送りボタン */
-    //var FFimage_sec = 0   //FFを使う必要ないかも
     @IBAction func FFbtn(_ sender: Any) {
         //自動再生がoffの時に作動する
         if isPlaying == false {
