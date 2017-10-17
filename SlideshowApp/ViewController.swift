@@ -118,6 +118,24 @@ class ViewController: UIViewController {
             rewPlaying = true
         }
     }
+    
+/* 画像タッチ */
+    //一旦停止の判定
+    var pause_segue = false
+    
+    @IBAction func imgButton(_ sender: Any) {
+        //　自動再生中に画面タッチしたら、一旦自動再生を止める。
+        //　自動再生を判定
+        
+        if isPlaying {
+            // 現在のタイマーを破棄する
+            self.timer.invalidate()
+            
+            pause_segue = true
+        }
+        
+        //　segueから戻ってきたら自動再生が始まる -> @IBAction func unwind(
+    }
  
 /* 画面遷移データ渡し */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -145,54 +163,17 @@ class ViewController: UIViewController {
             
             resultViewController.x = image
         }
-        
-        /*if isPlaying {
-            self.image_sec -= 1
-            let name = img[image_sec]
-            print("image_sec: \(image_sec)")
-            let image = UIImage(named: name)!
-            
-            resultViewController.x = image
-            
-            /*if 0 <= image_sec, image_sec < 3 {
-                let name = img[image_sec]
-                let image = UIImage(named: name)!
-                
-                resultViewController.x = image
-            }else if image_sec < 0 {
-                self.image_sec += 1
-                
-                let name = img[image_sec]
-                let image = UIImage(named: name)!
-                
-                resultViewController.x = image
-            }else {
-                self.image_sec -= 1
-                
-                let name = img[image_sec]
-                let image = UIImage(named: name)!
-                
-                resultViewController.x = image
-            }*/
-        }else {
-            if 0<image_sec {
-                self.image_sec -= 1
-            }else {
-                self.image_sec = 0
-            }
-            
-            let name = img[image_sec]
-            print("image_sec: \(image_sec)")
-            let image = UIImage(named: name)!
-            
-            resultViewController.x = image
-        }*/
-        
     }
     
     @IBAction func unwind(_ segue: UIStoryboardSegue) {
         // 他の画面から segue を使って戻ってきた時に呼ばれる
+        if pause_segue {
+            // タイマーの一旦停止からの再開
+            self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+            
+            // 一旦停止の判定の解除
+            pause_segue = false
+        }
     }
-
 }
 

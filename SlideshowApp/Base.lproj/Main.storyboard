@@ -49,6 +49,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Touch"/>
                                 <connections>
+                                    <action selector="imgButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HF3-sr-7Rp"/>
                                     <segue destination="eQx-ds-mmA" kind="show" id="ekp-mC-sNX"/>
                                 </connections>
                             </button>
