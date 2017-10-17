@@ -37,6 +37,7 @@ class ViewController: UIViewController {
     // selector: #selector(updatetimer) で指定された関数
     // timeInterval: 2, repeats: true で指定された通り、2秒毎に呼び出され続ける
     
+    
     func updateTimer(timer: Timer) {
         
         // x % y でループ可能　
@@ -60,6 +61,9 @@ class ViewController: UIViewController {
     // !=nil : 再生中, ==nil : 停止中
     var isPlaying = false
     
+    // true : 戻りボタン後,  false : 戻りボタン以外
+    var rewPlaying = false
+    
     @IBAction func onButton(_ sender: Any) {
         
         if isPlaying {
@@ -70,6 +74,7 @@ class ViewController: UIViewController {
             
             // startTimer() "停止中"で判断するため、 isPlaying = false としておく
             isPlaying = false
+            rewPlaying = false
 
         } else {
             button.setTitle("Stop", for: UIControlState.normal)
@@ -77,6 +82,7 @@ class ViewController: UIViewController {
             // タイマーの作成、始動
             self.timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
             isPlaying = true
+            rewPlaying = false
         }
     }
     
@@ -92,7 +98,9 @@ class ViewController: UIViewController {
             
             //現在のimage_secよりも一つ進める
             // これも、停止位置から順次作送りするために、加算演算子はケツに配置する
+            // !!しかし、先送りから、または戻りからそれぞれのボタン押すと、一回分、値が滑る
             self.image_sec += 1
+            rewPlaying = false
         }
     }
     
@@ -107,6 +115,7 @@ class ViewController: UIViewController {
             print("image_sec: \(image_sec)")
             
             self.image_sec -= 1
+            rewPlaying = true
         }
     }
  
@@ -115,7 +124,29 @@ class ViewController: UIViewController {
         // segueから遷移先のResultViewControllerを取得する
         let resultViewController:ResultViewController = segue.destination as! ResultViewController
         // 遷移先のResultViewControllerで宣言しているx, yに値を代入して渡す（写真の値）
-        if isPlaying {
+        if rewPlaying {
+            
+            // 戻りボタンの時はimage_secの値に１を足して、それ以外は１を引く
+            self.image_sec += 1
+            
+            let name = img[image_sec % 3]
+            print("image_sec: \(image_sec)")
+            let image = UIImage(named: name)!
+            
+            resultViewController.x = image
+
+        }else {
+            
+            self.image_sec -= 1
+            
+            let name = img[image_sec % 3]
+            print("image_sec: \(image_sec)")
+            let image = UIImage(named: name)!
+            
+            resultViewController.x = image
+        }
+        
+        /*if isPlaying {
             self.image_sec -= 1
             let name = img[image_sec]
             print("image_sec: \(image_sec)")
@@ -155,7 +186,7 @@ class ViewController: UIViewController {
             let image = UIImage(named: name)!
             
             resultViewController.x = image
-        }
+        }*/
         
     }
     
