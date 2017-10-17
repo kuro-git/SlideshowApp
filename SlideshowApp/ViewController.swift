@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var slideImgBtn: UIButton!
     
-    var img = ["SlideshowApp_sampleImg_01", "SlideshowApp_sampleImg_02", "SlideshowApp_sampleImg_03",]
+    var images = ["SlideshowApp_sampleImg_01", "SlideshowApp_sampleImg_02", "SlideshowApp_sampleImg_03",]
     
     @IBOutlet weak var slideImg: UIImageView!
     
@@ -25,7 +25,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         //一枚めの画像を表示させておく
-        slideImg.image = UIImage(named: img[0])
+        slideImg.image = UIImage(named: images[0])
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         // x % y でループ可能　
         // X=増え続ける値, y=ループするターム：画像の枚数
         
-        let name = img[image_sec % 3]
+        let name = images[image_sec % 3]
         print("image_sec: \(image_sec)")
         
         let image = UIImage(named: name)!
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
         //自動再生がoffの時に作動する
         if isPlaying == false {
             
-            let name = img[image_sec % 3]
+            let name = images[image_sec % 3]
             let image = UIImage(named: name)
             slideImg.image = image
             print("image_sec: \(image_sec)")
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
         //自動再生がoffの時に作動する
         if isPlaying == false, 0 <= image_sec {
             
-            let name = img[image_sec % 3]
+            let name = images[image_sec % 3]
             let image = UIImage(named: name)
             slideImg.image = image
             print("image_sec: \(image_sec)")
@@ -147,7 +147,7 @@ class ViewController: UIViewController {
             // 戻りボタンの時はimage_secの値に１を足して、それ以外は１を引く
             self.image_sec += 1
             
-            let name = img[image_sec % 3]
+            let name = images[image_sec % 3]
             print("image_sec: \(image_sec)")
             let image = UIImage(named: name)!
             
@@ -155,7 +155,7 @@ class ViewController: UIViewController {
 
         }else if image_sec == 0 { //アプリ起動直後の画面遷移
             
-            let name = img[image_sec % 3]
+            let name = images[image_sec % 3]
             print("image_sec: \(image_sec)")
             let image = UIImage(named: name)!
             
@@ -164,7 +164,7 @@ class ViewController: UIViewController {
             
             self.image_sec -= 1
             
-            let name = img[image_sec % 3]
+            let name = images[image_sec % 3]
             print("image_sec: \(image_sec)")
             let image = UIImage(named: name)!
             
