@@ -40,18 +40,18 @@ class ViewController: UIViewController {
     
     func updateTimer(timer: Timer) {
         
-        // x % y でループ可能　
-        // X=増え続ける値, y=ループするターム：画像の枚数
-        
-        let name = images[image_sec % 3]
-        print("image_sec: \(image_sec)")
-        
-        let image = UIImage(named: name)!
-        slideImg.image = image
-        
         // 1枚目の画像を[0]にするため加算演算子はケツに配置する
+        // ↑viewDidLoad()に images[0]を設置したため考慮する必要がなくなった
         self.image_sec += 1
         
+        // x % y でループ可能　
+        // X=増え続ける値, y=ループするターム：画像の枚数
+        let name = images[image_sec % 3]
+        print("image_sec: \(image_sec)")
+            
+        let image = UIImage(named: name)!
+        slideImg.image = image
+
     }
     
 /* 再生ボタン停止ボタン切り替え */
@@ -91,15 +91,17 @@ class ViewController: UIViewController {
         //自動再生がoffの時に作動する
         if isPlaying == false {
             
+            //現在のimage_secよりも一つ進める
+            // これも、停止位置から順次作送りするために、加算演算子はケツに配置する
+            // !!しかし、先送りから、または戻りからそれぞれのボタン押すと、一回分、値が滑る
+            // ↑viewDidLoad()に images[0]を設置したため考慮する必要がなくなった
+            self.image_sec += 1
+            
             let name = images[image_sec % 3]
             let image = UIImage(named: name)
             slideImg.image = image
             print("image_sec: \(image_sec)")
             
-            //現在のimage_secよりも一つ進める
-            // これも、停止位置から順次作送りするために、加算演算子はケツに配置する
-            // !!しかし、先送りから、または戻りからそれぞれのボタン押すと、一回分、値が滑る
-            self.image_sec += 1
             rewPlaying = false
         }
     }
@@ -107,14 +109,15 @@ class ViewController: UIViewController {
 /* 戻りボタン */
     @IBAction func Rewbtn(_ sender: Any) {
         //自動再生がoffの時に作動する
-        if isPlaying == false, 0 <= image_sec {
+        if isPlaying == false, 1 <= image_sec {
+            
+            self.image_sec -= 1
             
             let name = images[image_sec % 3]
             let image = UIImage(named: name)
             slideImg.image = image
             print("image_sec: \(image_sec)")
             
-            self.image_sec -= 1
             rewPlaying = true
         }
     }
@@ -142,34 +145,12 @@ class ViewController: UIViewController {
         // segueから遷移先のResultViewControllerを取得する
         let resultViewController:ResultViewController = segue.destination as! ResultViewController
         // 遷移先のResultViewControllerで宣言しているx, yに値を代入して渡す（写真の値）
-        if rewPlaying {
-            
-            // 戻りボタンの時はimage_secの値に１を足して、それ以外は１を引く
-            self.image_sec += 1
-            
-            let name = images[image_sec % 3]
-            print("image_sec: \(image_sec)")
-            let image = UIImage(named: name)!
-            
-            resultViewController.x = image
-
-        }else if image_sec == 0 { //アプリ起動直後の画面遷移
-            
-            let name = images[image_sec % 3]
-            print("image_sec: \(image_sec)")
-            let image = UIImage(named: name)!
-            
-            resultViewController.x = image
-        }else {
-            
-            self.image_sec -= 1
-            
-            let name = images[image_sec % 3]
-            print("image_sec: \(image_sec)")
-            let image = UIImage(named: name)!
-            
-            resultViewController.x = image
-        }
+        
+        let name = images[image_sec % 3]
+        print("image_sec: \(image_sec)")
+        let image = UIImage(named: name)!
+        
+        resultViewController.x = image
     }
     
     @IBAction func unwind(_ segue: UIStoryboardSegue) {
